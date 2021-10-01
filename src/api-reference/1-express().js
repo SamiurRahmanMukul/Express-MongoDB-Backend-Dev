@@ -10,8 +10,8 @@
  */
 
 const express = require("express");
-
 const app = express();
+const port = 3000;
 
 // TODO: express function using and body send different type data
 // app.use(express.json()); // ? 1.get header/body `JSON Formatted` data
@@ -30,8 +30,15 @@ app.use(
 const router = express.Router({
   caseSensitive: true,
 });
+
 app.use(router);
 
+router.get("/router", (req, res) => {
+  res.send("This is Router url with get request!");
+  res.end();
+});
+
+// get request
 app.get("/", (req, res) => {
   console.log(req.body);
   // console.log(req.body.name);
@@ -41,16 +48,18 @@ app.get("/", (req, res) => {
   res.send("This is Home url with get request!");
   res.end();
 });
-app.post("/", (req, res) => {
+
+// post request
+app.post("/post", (req, res) => {
   res.send("This is Home url with post request!");
   res.end();
 });
 
-// server listing with 3000 port...
-app.listen(3000, (err) => {
+// server listening on 3000 port...
+app.listen(port, (err) => {
   if (err) {
-    console.log(err);
+    console.log("Error: " + err);
   } else {
-    console.log("server listening successfully on 3000 port...");
+    console.log(`Express app listening at http://localhost:${port}`);
   }
 });

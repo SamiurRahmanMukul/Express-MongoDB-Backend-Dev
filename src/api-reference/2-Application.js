@@ -15,21 +15,25 @@ const express = require("express");
 
 const app = express();
 const admin = express();
-
-// ? 7.app.engine() - method using set `template engine` by ejs
-app.set("view engine", "ejs");
+const port = 3000;
 
 // ? 1.app.locals() - using set local variable & access any files in this project
 app.locals.title = "My Application";
 
 // ? 2.sub routing path & mountpath
 app.use("/admin", admin);
+
 admin.get("/dashboard", (req, res) => {
   console.log(admin.mountpath);
 
   res.send("Welcome to admin dashboard");
   res.end();
 });
+
+/* admin.on("mount", (parent) => {
+  console.log("Admin Mounted");
+  console.log(parent);
+}); */
 
 // ? 3.app.all() - method using request any method
 app.all("/home", (req, res) => {
@@ -47,9 +51,11 @@ app.param("id", (req, res, next, id) => {
     userId: id,
     name: "Samiur Rahman Mukul",
   };
+
   req.userDetails = user;
   next();
 });
+
 app.get("/user/:id", (req, res) => {
   console.log(req.userDetails);
 
@@ -76,21 +82,35 @@ app
     res.end();
   });
 
+// ? 7.app.engine() - method using set `template engine` by ejs
+app.set("view engine", "ejs");
+
+app.all("/template", () => {
+  res.render("views");
+});
+
+app.all("/template/pages", () => {
+  res.render("views/pages");
+});
+
+// get request
 // app.get("/", handle);
 app.get("/", (req, res) => {
   res.send("Home page with GET request");
   res.end();
 });
 
+// post request
 app.post("/", (req, res) => {
   res.send("Home page with POST request");
   res.end();
 });
 
-app.listen(3000, (err) => {
+// server listening on 3000 port...
+app.listen(port, (err) => {
   if (err) {
-    console.log(err);
+    console.log("Error: " + err);
   } else {
-    console.log("server listen successfully on 3000 port...");
+    console.log(`Express app listening at http://localhost:${port}`);
   }
 });

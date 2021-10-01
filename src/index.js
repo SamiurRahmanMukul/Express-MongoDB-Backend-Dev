@@ -6,6 +6,7 @@ app.get("/", (req, res) => {
   res.send("This is Home page with get request!");
   res.end();
 });
+
 app.post("/", (req, res) => {
   res.send("This is Home page with post request!");
   res.end();

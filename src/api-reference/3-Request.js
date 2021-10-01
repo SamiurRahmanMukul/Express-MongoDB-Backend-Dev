@@ -18,28 +18,31 @@
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
-
+const handler = require("./handler/handler");
 const app = express();
+const port = 3000;
+
 app.use(express.json());
 app.use(cookieParser());
 
 // ! create custom route
 const adminRoute = express.Router();
+
 adminRoute.get("/dashboard", (req, res) => {
-  console.log(req.baseUrl);
-  console.log(req.originalUrl);
-  console.log(req.url);
-  console.log(req.path);
-  console.log(req.hostname);
-  console.log(req.method);
-  console.log(req.protocol);
-  console.log(req.secure);
-  console.log(req.route);
+  console.log("baseUrl: " + req.baseUrl);
+  console.log("originalUrl: " + req.originalUrl);
+  console.log("url: " + req.url);
+  console.log("path: " + req.path);
+  console.log("hostname: " + req.hostname);
+  console.log("method: " + req.method);
+  console.log("protocol: " + req.protocol);
+  console.log("secure: " + req.secure);
+  console.log("route: " + req.route);
 
   // ! request method
-  console.log(req.accepts("json"));
-  console.log(req.get("accept"));
-  console.log(req.param("name")); // ! express ignore this method - so not user
+  console.log("Request Method / json: " + req.accepts("json"));
+  console.log("Request Method / accept: " + req.get("accept"));
+  console.log("Request Method / name: " + req.param("name")); // ! express ignore this method - so not user
 
   res.send("We are in Admin Dashboard");
   res.end();
@@ -48,27 +51,36 @@ adminRoute.get("/dashboard", (req, res) => {
 app.use("/admin", adminRoute);
 
 app.get("/user/:id", (req, res) => {
-  console.log(req.baseUrl);
-  console.log(req.params);
-  console.log(req.params.id);
-  console.log(req.query);
-  console.log(req.cookies);
+  console.log("baseUrl: " + req.baseUrl);
+  console.log("params: " + req.params);
+  console.log("params.id: " + req.params.id);
+  console.log("query: " + req.query);
+  console.log("cookies: " + req.cookies);
 
   res.send("Hello World!");
   res.end();
 });
 
 app.post("/user", (req, res) => {
-  console.log(req.body);
+  console.log("body: " + req.body);
+  console.log("route: " + req.route);
 
   res.send("user router with POST request");
   res.end();
 });
 
-app.listen(3000, (err) => {
+app.get('/handler/"id', handler);
+
+app.all("/", (req, res) => {
+  res.send("home url with all request");
+  res.end();
+});
+
+// server listening on 3000 port...
+app.listen(port, (err) => {
   if (err) {
-    console.log(err);
+    console.log("Error: " + err);
   } else {
-    console.log("server listen successfully on 3000 port...");
+    console.log(`Express app listening at http://localhost:${port}`);
   }
 });
