@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload with Multer</title>
+  </head>
+  <body>
+    <div class="container">
+      <form action="http://localhost:3000" method="post" enctype="multipart/form-data">
+        <!-- avatar upload -->
+        <label for="avatar">Avatar Upload</label>
+        <input type="file" name="avatar" multiple />
+
+        <!-- gallery upload -->
+        <!-- <label for="gallery">Gallery Upload</label>
+        <input type="file" name="gallery" multiple /> <br /> -->
+
+        <!-- paf upload -->
+        <!-- <label for="pdf">PDF Upload</label>
+        <input type="file" name="pdf" multiple /> <br /> -->
+
+        <!-- submit button -->
+        <input type="submit" value="Submit Now" />
+      </form>
+    </div>
+  </body>
+</html>
