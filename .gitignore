@@ -23,3 +23,6 @@ bin-release/
 
 # ignore NPM Packages
 /node_modules
+
+# ingone .env
+.env

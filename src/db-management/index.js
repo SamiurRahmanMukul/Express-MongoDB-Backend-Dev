@@ -1,20 +1,14 @@
-/* 
-  📛 Title: Mongoose TODO App
-  💁‍♀️ Description: Express.Js & Mongoose.Js CURD Operations
-  👤 Author: Md. Samiur Rahman (Mukul) 
-  🕸️ Website: http://www.SamiurRahmanMukul.epizy.com
-  📦 Github: http://www.github.com/SamiurRahmanMukul
-  📧 Email: sr.mukul9090@gmail.com
-  📅 Date: 03/10/2021 */
-
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const todoHandler = require("./routeHandler/todoHandler");
+const userHandler = require("./routeHandler/userHandler");
 
 const port = 3000;
 
 // express app initialization
 const app = express();
+dotenv.config();
 app.use(express.json());
 
 // database connection with mongoose
@@ -28,14 +22,17 @@ mongoose
 
 // application routes
 app.use("/todo", todoHandler);
+app.use("/user", userHandler);
 
 // default error handler
-function errorHandler(err, req, res, next) {
+const errorHandler = (err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
   }
   res.status(500).json({ error: err });
-}
+};
+
+app.use(errorHandler);
 
 // todos application run at 3000 port...
 app.listen(port, (err) => {
